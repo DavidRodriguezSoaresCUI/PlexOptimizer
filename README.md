@@ -6,6 +6,14 @@ This software was originally developed for low-power Plex servers that can't han
 
 > You may share your use case by opening an issue with title beginning with `[USECASE]`
 
+## Quick start guide
+
+1. Install <a href="requirements">Requirements</a>
+2. Execute from terminal with syntax:
+    ```bash
+    <PYTHON> <PLEX_OPTIMIZER_PATH> <ARGUMENTS>
+    ```
+
 ## Contents of this repository
 
 I am the exclusive owner of the content of this repository, unless explicitly stated.
