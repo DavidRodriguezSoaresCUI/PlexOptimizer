@@ -1,0 +1,333 @@
+mkvmerge -o out [global options] [options1] <file1> [@option-file.json] …
+
+ Options globales :
+  -v, --verbose            Augmenter la verbosité.
+  -q, --quiet              Supprimer les messages d'état.
+  -o, --output cible       Écrit vers le fichier « cible ».
+  -w, --webm               Crée un fichier conforme à WebM.
+  --title <title>          Le titre pour ce fichier destination.
+  --global-tags <file>     Lit les balises globales depuis un fichier XML.
+
+
+ Gestion des chapitres :
+  --chapters <file>        Lit les informations de chapitres du fichier.
+  --chapter-language <lng> Définit la langue dans les entrées de chapitres.
+  --chapter-charset <cset> Jeu de caractères pour un fichier de
+chapitres simple.
+  --chapter-sync <d[,o[/p]]>
+                           Synchronise, ajuste les horodatages de chapitres
+                           de « d » ms.
+                           « o/p » : ajuste les horodatages en multipliant par
+                           « o/p » pour régler les décalages linéaires. « p » est 1 par
+                           défault si omis. « o » et « p » peuvent être des nombres à
+                           virgule flottante.
+  --cue-chapter-name-format <format>
+                           Modèle de conversion des entrées de la feuille
+                           de montage CUE en noms de chapitres.
+  --default-language <lng> Utilise cette langue pour toutes les pistes
+                           sauf si supplantée par l'option --language.
+  --generate-chapters <mode>
+                           Génère automatiquement les chapitres selon le
+                           mode (« when-appending » ou « interval:<duration> »).
+  --generate-chapters-name-template <template>
+                           Modèle pour les nouveaux noms de chapitres générés
+                           (par défaut : « Chapitre <NUM:2> »).
+
+ Gestion des informations de segment :
+  --segmentinfo <file>     Lit les informations de segment depuis le fichier.
+  --segment-uid <SID1,[SID2…]>
+                           Fixe les UID des segments à SID1, SID2, etc.
+
+Contrôle général en sortie (options globales avancées) :
+  --track-order <FileID1:TID1,FileID2:TID2,FileID3:TID3,...>
+                           Une liste d'ID de fichiers et de pistes,
+                           séparée par des virgules, qui contrôle
+                           l'ordre des pistes dans le fichier de
+                           destination.
+  --cluster-length <n[ms]> Place au plus n blocs de données dans chaque grappe.
+                           Si le nombre est suivi de « ms », place au plus
+                           n millisecondes de données dans chaque grappe.
+  --clusters-in-meta-seek  Écrit les métadonnées de positionnement pour les grappes.
+  --timestamp-scale <n>    Fixe le facteur d'échelle des horodatages à n.
+  --enable-durations       Active les durées de tous les blocs.
+  --no-cues                N'écrit pas les données (l'index) CUE.
+  --no-date                N'écrit pas le champ « date » dans les entêtes d'informations de segment.
+  --disable-lacing         Ne pas utiliser le laçage.
+  --disable-track-statistics-tags
+                           N'écrit pas de balises avec les statistiques de piste.
+  --disable-language-ietf  N'écrit pas les éléments de langue IETF BCP 47 dans les
+                           entêtes de piste, chapitres et balises.
+  --normalize-language-ietf <canonical|extlang>
+                           Normalise toutes les étiquettes de langue IETF BCP 47 soit
+                           en leur forme canonique soit en leur forme d'étiquettes de langue étendue
+                           soit pas du tout (par défaut : forme canonique).
+
+ Scission, liage et concaténation des fichiers (options globales étendues) :
+  --split <d[K,M,G]|HH:MM:SS|s>
+                           Crée un nouveau fichier au bout de d octets
+                           (ko, Mo, Go) ou d'un certain temps.
+  --split timestamps:A[,B…]
+                           Crée un nouveau fichier après chaque horodatage
+                           A, B, etc.
+  --split parts:start1-end1[,[+]start2-end2,…]
+                           Conserve les intervalles d'horodatages de début-fin
+                           soit en fichiers séparés soit concaténé au fichier
+                           de l'intervalle précédent si préfixé par « + ».
+  --split parts-frames:start1-end1[,[+]start2-end2,…]
+                           Comme pour « parts », mais « startN »/« endN »
+                           sont des numéros de trame/champ et non
+                           des horodatages.
+  --split frames:A[,B…]
+                           Crée un fichier après chaque trame/champ A, B
+                           etc.
+  --split chapters:all|A[,B…]
+                           Crée un fichier avant chaque chapitre (avec « all »)
+                           ou avant les chapitres A, B, etc.
+  --split-max-files <n>    Crée au plus n fichiers.
+  --link                   Lie les fichiers scindés.
+  --link-to-previous <SID> Lie le premier fichier au SID fourni.
+  --link-to-next <SID>     Lie le dernier fichier au SID fourni.
+  --append-to <QFID1:QTID1:ZFID1:ZTID1,QFID2:QTID2:ZFID2:ZTID2,…>
+                           Liste d'ID de fichiers et de pistes séparés par une
+                           virgule qui déterminent quelle piste d'un fichier est
+                           concaténée à quelle autre du fichier précédent.
+  --append-mode <file|track>
+                           Détermine comment mkvmerge calcule les horodatages
+                           lors de la concaténation de fichiers.
+  <file1> + <file2>        Concatène file2 à file1.
+  <file1> +<file2>         Identique à « <file1> + <file2> ».
+  [ <file1> <file2> ]      Identique à « <file1> + <file2> ».
+  = <file>                 Ne recherche pas et concatène les fichiers de
+                           même nom de base mais de suffixe numérique différent.
+  =<file>                  Identique à « = <file> ».
+  ( <file1> <file2> )      Traite file1 et file2 comme s'ils étaient concaténés
+en un seul gros fichier.
+
+ Prise en charge des pièces jointes (options globales étendues) :
+  --attachment-description <desc>
+                           Description de la pièce jointe suivante.
+  --attachment-mime-type <mime type>
+                           Type MIME de la pièce jointe suivante.
+  --attachment-name <name> Nom pour la pièce jointe suivante
+qui doit être enregistré.
+  --attach-file <file>     Crée une pièce jointe dans le
+fichier Matroska.
+  --attach-file-once <file>
+                           Crée une pièce jointe dans le premier fichier Matroska écrit.
+  --enable-legacy-font-mime-types
+                           Utiliser les anciens types MIME de polices de caractères à l'ajout de nouvelles
+                           pièces jointes ou pour celles existantes.
+
+ Options pour chaque fichier source :
+  -a, --audio-tracks <n,m,…>
+                           Copie les pistes audio n, m, etc.
+                           Par défaut : copie toutes les pistes audio.
+  -A, --no-audio           Ne copie aucune piste audio de ce fichier.
+  -d, --video-tracks <n,m,…>
+                           Copie les pistes vidéo n, m, etc.
+                           Par défaut : copie toutes les pistes vidéo.
+  -D, --no-video           Ne copie aucune piste vidéo de ce fichier.
+  -s, --subtitle-tracks <n,m,…>
+                           Copie les pistes de sous-titres n, m, etc.
+                           Par défaut : copie toutes les pistes de sous-titres.
+  -S, --no-subtitles       Ne copie aucune piste de sous-titres de ce fichier.
+  -b, --button-tracks <n,m,…>
+                           Copie les pistes de boutons n, m, etc.
+                           Par défaut : copie toutes les pistes de boutons.
+  -B, --no-buttons         Ne copie aucune piste de boutons de ce fichier.
+  -m, --attachments <n[:all|first],m[:all|first],...>
+                           Copie les pièces jointes avec les IDs n, m, etc.
+                           vers tous ou seulement le premier fichier
+                           destination. Par défaut, copie toutes les pièces
+                           jointes vers tous les fichiers destination.
+  -M, --no-attachments     Ne copie aucune pièce jointe de ce fichier source.
+  -t, --tags <TID:name> Lit les balises pour la piste
+                           depuis un fichier XML.
+  --track-tags <n,m,…>   Copie les balises pour les pistes n, m, etc. Par
+                           défaut, copie les balises pour toutes les pistes.
+  -T, --no-track-tags      Ne copie pas les balises pour les pistes
+                           du fichier source.
+  --no-global-tags         Ne conserve pas les balises globales
+                           du fichier source.
+  --no-chapters            Ne conserve pas les chapitres du fichier source.
+  -y, --sync <TID:d[,o[/p]]>
+                           Synchronise, ajuste les horodatages
+                           de la piste d'identifiant « TID » de « d » ms.
+                           « o/p » ajuste les horodatages par multiplication
+                           pour corriger les dérives linéaires.
+                           « p » vaut 1 par défaut s'il est omis.
+                           « o » et « p » peuvent être des nombres décimaux.
+  --default-track-flag <TID[:bool]>
+                           Pose l'ndicateur « Piste par défaut » pour cette piste
+                           ou l'oblige à ne pas être présent si bool est 0.
+  --forced-display-flag <TID[:bool]>
+                           Pose l'indicateur « Affichage forcé » pour cette piste
+                           ou l'oblige à ne pas être présent si bool est 0.
+  --track-enabled-flag <TID[:bool]>
+                           Pose l'indicateur « Piste activée » pour cette piste ou
+                           l'oblige à ne pas être présent si bool est 0.
+  --hearing-impaired-flag <TID[:bool]>
+                           Pose l'indicateur « Malentendant » pour cette piste ou
+                            l'oblige à ne pas être présent si bool est 0.
+  --visual-impaired-flag <TID[:bool]>
+                           Pose l'indicateur «  Malvoyant » pour cette piste ou
+                            l'oblige à ne pas être présent si bool est 0.
+  --text-descriptions-flag <TID[:bool]>
+                           Pose l'indicateur « Audiodescription » pour cette piste ou
+                            l'oblige à ne pas être présent si bool est 0.
+  --original-flag <TID[:bool]>
+                           Pose l'indicateur « Langue d'origine » pour cette piste ou
+                            l'oblige à ne pas être présent si bool est 0.
+  --commentary-flag <TID[:bool]>
+                           Pose l'indicateur « Commentaire » pour cette piste ou
+                            l'oblige à ne pas être présent si bool est 0.
+  --blockadd <TID:x>       Définit le nombre maximal de niveaux
+                           supplémentaires de blocs pour cette piste.
+  --track-name <TID:name>   Définit le nom d'une piste.
+  --cues <TID:none|iframes|all>
+                           Crée les entrées (index) CUE pour cette piste :
+                           aucune, pour les trames I seules, pour toutes.
+  --language <TID:lang>    Définit la langue pour la piste (balise de langue
+                           IETF BCP 47/RFC 5646).
+  --aac-is-sbr <TID[:0|1]> La piste avec l'ID est de type HE-AAC/AAC+/SBR-AAC
+                           ou pas. La valeur « :1 » peut être omise.
+  --reduce-to-core <TID>   Ne conserve que le noyau des pistes audio
+                           prenant en charge les extensions HD au lieu de copier
+                            à la fois le noyau et les extensions.
+  --remove-dialog-normalization-gain <TID>
+                           Retire ou minimise le gain de normalisation des dialogues
+                           en modifiant les entêtes de trame audio.
+  --timestamps <TID:file> Lit les horodatages depuis un fichier.
+  --default-duration 
+                           Remplace la durée par défaut d'une piste par X.
+                           X peut être un nombre décimal ou une fraction.
+  --fix-bitstream-timing-information <TID[:bool]>
+                           Ajuste la fréquence de trame/champ stockée
+                           dans le flux binaire vidéo pour correspondre à la durée par défaut de la piste.
+
+ Options ne s'appliquant qu'aux pistes vidéo :
+  -f, --fourcc <FOURCC>    Force la valeur spécifiée pour le FourCC.
+                           Ne fonctionne qu'avec les pistes vidéo.
+  --aspect-ratio <TID:f|a/b>
+                           Définit les dimensions à l'écran (largeur et
+                           hauteur) relatives au ratio d'aspect indiqué.
+  --aspect-ratio-factor <TID:f|a/b>
+                           Calcule d'abord le ratio d'aspect en multi-
+                           pliant celui d'origine par ce facteur puis
+                           en déduit les dimensions à l'écran.
+  --display-dimensions <TID:width>x<height>
+                           Définit explicitement les dimensions à l'écran.
+  --cropping <TID:left,top,right,bottom>
+                           Définit les paramètres de recadrage.
+  --field-order <TID:n>    Définit le paramètre d'ordre des champs de la vidéo
+                           (voir la documentation pour les valeurs valides).
+  --stereo-mode <TID:n|keyword>
+                           Définit le paramètre de mode stéréo :
+                           un nombre entre 0 et 14 ou un mot-clé
+                           (liste complète dans la documentation).
+  --colour-matrix-coefficients <TID:n>
+                           Définit les coefficients de matrice de la vidéo utilisés pour
+                           déduire les valeurs de luma et chroma depuis les couleurs  rouge, vert
+                           et bleu primaires.
+  --colour-bits-per-channel <TID:n>
+                           Définit le nombre de bits codés pour un canal de
+                           couleur. Une valeur de 0 indique que le nombre
+                           n'est pas spécifié.
+  --chroma-subsample <TID:hori,vert>
+                           Le nombre de pixels à enlever dans les canaux Cr et Cb
+                           pour chaque pixel non retiré horizontalement
+                           et verticalement.
+  --cb-subsample <TID:hori,vert>
+                           Le nombre de pixels à retirer du canal Cb
+                           pour chaque pixel non retiré horizontalement
+                           et verticalement. Cela vient en addition de
+                           --chroma-subsample.
+  --chroma-siting <TID:hori,vert>
+                            Comment la chroma is positionnée horizontalement/verticalement.
+  --colour-range <TID:n>   Coupure selon les limites de couleurs.
+  --colour-transfer-characteristics <TID:n>
+                           Les caractéristiques de transfert de la vidéo.
+  --colour-primaries <TID:n>
+                           Les couleurs primaires de la vidéo.
+  --max-content-light <TID:n>
+                           Luminosité maximale d'un pixel unique en candelas
+                           par mètre carré (cd/m²).
+  --max-frame-light <TID:n>
+                           Luminosité maximale par trame moyenne en candelas
+                           par mètre carré (cd/m²).
+  --chromaticity-coordinates <TID:red-x,red-y,green-x,green-y,blue-x,blue-y>
+                           Coordonnées de la chromaticité Rouge/Vert/Bleu définie
+                           selon CIE 1931.
+  --white-colour-coordinates <TID:x,y>
+                           Coordonnées de la chromaticité de la couleur blanche définie
+                           selon CIE 1931.
+  --max-luminance <TID:float>
+                           Luminance maximale en candelas par mètre carré
+                           (cd/m²).
+  --min-luminance <TID:float>
+                           Luminance minimale en candelas par mètre carré
+                           (cd/m²).
+  --projection-type <TID:method>
+                           Méthode de projection utilisée (0–3).
+  --projection-private <TID:data>
+                           Données privées s'appliquant seulement à une projection
+                           spécifique (en nombre hex).
+  --projection-pose-yaw <TID:float>
+                           Une rotation en lacet de la projection.
+  --projection-pose-pitch <TID:float>
+                           Une rotation en tangage de la projection.
+  --projection-pose-roll <TID:float>
+                           Une rotation en roulis de la projection.
+
+ Options ne s'appliquant qu'aux pistes de sous-titres texte :
+  --sub-charset <TID:charset>
+                           Détermine le jeu de caractères des sous-titres
+                           texte pour la conversion en UTF-8.
+
+ Options ne s'appliquant qu'aux pistes de sous-titres VobSub :
+  --compression <TID:mode>
+                           Définit le mode de compression utilisé pour la
+                           piste spécifiée (« aucun » ou « zlib »).
+
+
+ Autres options :
+  -i, --identify <file>    Affiche les informations sur le fichier source.
+  -J <file>                Ceci est un alias commode pour
+                           « --identification-format json --identify fichier ».
+
+  -F, --identification-format <format>
+                           Définit le format des résultats d'identification
+                           (« text » ou « json » ; par défaut « text »).
+  --probe-range-percentage <percent>
+                           Définit la taille maximale à examiner pour les pistes en pourcentage
+                           de la taille totale du fichier pour certains types de fichiers
+                           (par défaut : 0.3).
+  -l, --list-types         Types de fichiers source pris en charge par les listes.
+  --list-languages         Liste toutes les langues ISO 639 et leurs
+                           codes ISO 639-2.
+  --capabilities           Liste les fonctions optionnelles avec lesquelles mkvmerge a été compilé.
+  --priority <priority>    Définit la priorité d'exécution de mkvmerge.
+  --ui-language <code>     Utilise la traduction en langue « code ».
+  --command-line-charset <charset>
+                           Jeu de caractères pour les chaînes de la ligne de commande.
+  --output-charset <cset>  Présente les messages dans ce jeu de caractères.
+  -r, --redirect-output <file>
+                           Redirige tous les messages vers ce fichier.
+  --flush-on-close         Transfert toutes les données cachées vers le
+                         stockage en fermant un fichier ouvert en écriture.
+  --abort-on-warnings      Abandonne le programme après le premier
+                           avertissement.
+  --deterministic <seed>   Permet la création de fichiers identiques à l'octet
+                            près si les mêmes fichiers source avec les mêmes
+                            options et la même amorce sont utilisés.
+
+  --debug <topic>          Active un rapport de débogage sur « sujet ».
+  --engage <feature>       Active la fonction expérimentale « fonction ».
+  @option-file.json        Lit des options supplémentaires de ligne de
+                           commandes depuis le fichier JSON spécifié (voir la page du manuel).
+  -h, --help               Affiche cette aide.
+  -V, --version            Affiche les informations de version.
+
+
+Lire la page d'aide ou la documentation HTML de mkvmerge.
+Elle donne des explications détaillées qui ne se trouvent pas ici.
