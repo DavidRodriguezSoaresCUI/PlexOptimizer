@@ -8,7 +8,7 @@ This software was originally developed for low-power Plex servers that can't han
 
 ## Quick start guide
 
-1. Install <a href="requirements">Requirements</a>
+1. Install <a href="#requirements">Requirements</a>
 2. Execute from terminal with syntax:
     ```bash
     <PYTHON> <PLEX_OPTIMIZER_PATH> <ARGUMENTS>
