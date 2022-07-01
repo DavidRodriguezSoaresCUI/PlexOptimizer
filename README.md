@@ -14,7 +14,7 @@ Required to execute `Plex Optimizer`:
 - `plex_optimizer.py`: the main script
 - `codec_constraint_converter.py`: bespoke module for rule-based conversion planning with ffmpeg and ffprobe
 - `os_detect.py`: taken from [scivision's pybashutils](https://github.com/scivision/pybashutils/blob/main/pybashutils/os_detect.py)
-- `utils.py``: contains functions and stuff, mostly taken from my other project [DRSlib](https://github.com/DavidRodriguezSoaresCUI/DRSlib)
+- `utils.py`: contains functions and stuff, mostly taken from my other project [DRSlib](https://github.com/DavidRodriguezSoaresCUI/DRSlib)
 - `webvtt_sanitize.py`: bespoke script for a subtitle conversion step
 - `format_compatibility.json`: contains information about MP4 and MKV containers' format compatibilities
 
