@@ -1,4 +1,4 @@
-# Plex Optimizer
+# [Plex Optimizer](https://github.com/DavidRodriguezSoaresCUI/PlexOptimizer)
 
 This software aims at helping you with your movies/series library of video files by making them as **widely compatible** as possible.
 
